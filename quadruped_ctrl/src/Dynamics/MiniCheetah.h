@@ -21,25 +21,25 @@ Quadruped<T> buildMiniCheetah() {
   Quadruped<T> cheetah;
   cheetah._robotType = RobotType::MINI_CHEETAH;
 
-  cheetah._bodyMass = 3.3;
-  cheetah._bodyLength = 0.19 * 2;
-  cheetah._bodyWidth = 0.049 * 2;
-  cheetah._bodyHeight = 0.05 * 2;
-  cheetah._abadGearRatio = 6;
-  cheetah._hipGearRatio = 6;
-  cheetah._kneeGearRatio = 9.33;
+  cheetah._bodyMass = 6.0; //estimated at around 6 for K3lso
+  cheetah._bodyLength = 0.245 * 2; //estimated to confirm
+  cheetah._bodyWidth = 0.055 * 2; //estimated to confirm
+  cheetah._bodyHeight = 0.05 * 2; //estimated to confirm
+  cheetah._abadGearRatio = 9; // Specs for AK10-9
+  cheetah._hipGearRatio = 9; // Specs for AK10-9
+  cheetah._kneeGearRatio = 12.6; // Additional reduction for knee Specs from AK10-9 9 *1,4 = 12,6 (10T/14T)
   cheetah._abadLinkLength = 0.062;
-  cheetah._hipLinkLength = 0.209;
+  cheetah._hipLinkLength = 0.279523;
   //cheetah._kneeLinkLength = 0.175;
   //cheetah._maxLegLength = 0.384;
   cheetah._kneeLinkY_offset = 0.004;
   //cheetah._kneeLinkLength = 0.20;
-  cheetah._kneeLinkLength = 0.195;
-  cheetah._maxLegLength = 0.409;
+  cheetah._kneeLinkLength = 0.302314;
+  cheetah._maxLegLength = 0.509;
 
 
-  cheetah._motorTauMax = 3.f;
-  cheetah._batteryV = 24;
+  cheetah._motorTauMax = 6.f; // ?? To confirm
+  cheetah._batteryV = 44; // 10S Lipo
   cheetah._motorKT = .05;  // this is flux linkage * pole pairs
   cheetah._motorR = 0.173;
   cheetah._jointDamping = .01;
