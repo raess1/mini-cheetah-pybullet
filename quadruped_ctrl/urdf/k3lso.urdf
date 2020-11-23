@@ -13,8 +13,10 @@
     <inertial>
       <origin xyz="0.0 0.0 0.0"/>	
       <origin rpy="0 0 0" xyz="0.02003748539570111 -0.0071304890141553725 -0.4"/>
-      <mass value="5.7"/>
-      <inertia ixx="2.716E+07" ixy="-7.231E+04" ixz="-1.353E+06" iyy="2.858E+08" iyz="8.786E+04" izz="2.898E+08"/>
+      <mass value="4.75"/>
+      //<inertia ixx="2.716E+07" ixy="-7.231E+04" ixz="-1.353E+06" iyy="2.858E+08" iyz="8.786E+04" izz="2.898E+08"/>
+      //<inertia ixx="0.021888" ixy="0.0" ixz="1.8e-05" iyy="0.110035" iyz="-0.0" izz="0.125"/>
+      <inertia ixx="0.022" ixy="0.00" ixz="1.754E-05" iyy="0.11" iyz="0" izz="0.125"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
