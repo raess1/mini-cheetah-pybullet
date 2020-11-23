@@ -76,7 +76,7 @@ void ConvexMPCLocomotion::recompute_timing(int iterations_per_mpc) {
 //设置期望值
 void ConvexMPCLocomotion::_SetupCommand(StateEstimatorContainer<float> &_stateEstimator, std::vector<double> gamepadCommand){
 
-  _body_height = 0.32;
+  _body_height = 0.43;
 
   float x_vel_cmd, y_vel_cmd;
   float filter(0.1);

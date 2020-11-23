@@ -77,12 +77,12 @@ class LegController {
   LegControllerData<T> datas[4];
   Quadruped<T>& _quadruped;
   bool _legsEnabled = false;
-  T _maxTorque = 0;
+  T _maxTorque = 54;
   bool _zeroEncoders = false;
   u32 _calibrateEncoders = 0;
   int flags = 0;
     //float stand_target[12] = {0.0, -0.8, 1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6};
-  float stand_target[12] = {0.0, -0.8, 1.4, 0.0, -0.8, 1.4, 0.0, -0.8, 1.4, 0.0, -0.8, 1.4};
+  float stand_target[12] = {-0.1, -0.78, 1.04, 0.1, -0.78, 1.04, -0.1, -0.78, 1.04, 0.1, -0.78, 1.04};
   float init_pos[12] = {0.0};
 
   int myflags = 0;

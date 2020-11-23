@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import pybullet as p
 import numpy
@@ -28,7 +28,7 @@ def init_simulation():
     # motor_id_list = [4, 5, 6, 12, 13, 14, 0, 1, 2, 8, 9, 10]
     compensateReal = [-1, -1, -1, 1, -1, -1, -1, 1, 1, 1, 1, 1]
     p.setGravity(0, 0, -9.8)
-    cubeStartPos = [0, 0, 0.5]
+    cubeStartPos = [0, 0, 0.4]
     p.resetDebugVisualizerCamera(0.2, 45, -30, [1, -1, 1])
     planeId = p.loadURDF("plane.urdf")
     p.changeDynamics(planeId, -1, lateralFriction=1.0)
@@ -36,7 +36,7 @@ def init_simulation():
     #                    useFixedBase=FixedBase)
 #"mini_cheetah/mini_cheetah.urdf"
 #"/home/quadruped/cheetah_ws/src/yobo_model/yobotics_description/urdf/yobotics.urdf"
-    boxId = p.loadURDF("mini_cheetah/mini_cheetah.urdf", cubeStartPos,
+    boxId = p.loadURDF("/src/mini-cheetah-pybullet/quadruped_ctrl/urdf/k3lso.urdf", cubeStartPos,
                        useFixedBase=False)
 
     jointIds = []
@@ -44,8 +44,8 @@ def init_simulation():
         info = p.getJointInfo(boxId, j)
         jointIds.append(j)
 
-    jointConfig = numpy.array([-0.7, -1.0, 2.7, 0.7, -1.0, 2.7, -0.7, -1.0, 2.7, 0.7, -1.0, 2.7])
-    init_new_pos = [-0.0, -1.4, 2.7, 0.0, -1.4, 2.7, -0.0, -1.4, 2.7, 0.0, -1.4, 2.7]
+    jointConfig = numpy.array([0, 1.88, -2.67, 0, 1.88, -2.67, 0, 1.88, -2.67, 0, 1.88, -2.67])
+    init_new_pos = [-0.1, -0.78, 1.04, 0.1, -0.78, 1.04, -0.1, -0.78, 1.04, 0.1, -0.78, 1.04]
     for j in range(12):
         p.setJointMotorControl2(boxId, motor_id_list[j], p.POSITION_CONTROL, init_new_pos[j], force=500.0)
 
@@ -88,8 +88,8 @@ def thread_job():
 
 def callback_state(msg):
     global getMode, get_position, get_effort
-    del get_position[:]
-    del get_effort[:]
+    get_position.clear()
+    get_effort.clear()
 
     get_position.append(msg.position[0])
     get_position.append(-msg.position[1])
@@ -123,7 +123,7 @@ def callback_mode(req):
     getMode = req.cmd
     print(getMode)
     if getMode == 0:
-        p.resetBasePositionAndOrientation(boxId, [0, 0, 0.2], [0, 0, 0, 1])
+        p.resetBasePositionAndOrientation(boxId, [0, 0, 0.4], [0, 0, 0, 1])
         time.sleep(1)
         for j in range(16):
             force = 0
@@ -159,20 +159,21 @@ def talker():
     middle_target = []
     joint_Kp = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
     joint_Kd = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
-    stand_target = [0.0, -0.8, 1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6]
+    stand_target = [-0.1, -0.78, 1.04, 0.1, -0.78, 1.04, -0.1, -0.78, 1.04, 0.1, -0.78, 1.04]
     pub1 = rospy.Publisher('/get_js', JointState, queue_size=100)
     pub2 = rospy.Publisher('/imu_body', Imu, queue_size=100)
     pub3 = rospy.Publisher('/get_com', commandDes, queue_size=100)
     imu_msg = Imu()
     setJSMsg = JointState()
     com_msg = commandDes()
+    com_msg2 = commandDes()
     freq = 400
     rate = rospy.Rate(freq)  # hz
 
     while not rospy.is_shutdown():
 
         if myflags == 100:
-            p.resetBasePositionAndOrientation(boxId, [0, 0, 0.2], [0, 0, 0, 1])
+            p.resetBasePositionAndOrientation(boxId, [0, 0, 0.5], [0, 0, 0, 1])
             time.sleep(1)
             for j in range(16):
                 force = 0
@@ -217,11 +218,19 @@ def talker():
                              joint_state[3][1], joint_state[4][1], joint_state[5][1],
                              joint_state[6][1], joint_state[7][1], joint_state[8][1],
                              joint_state[9][1], joint_state[10][1], joint_state[11][1]]
+        if len(get_effort):
+              setJSMsg.effort = [get_effort[0], get_effort[1], get_effort[2],
+                             get_effort[3], get_effort[4], get_effort[5],
+                             get_effort[6], get_effort[7], get_effort[8],
+                             get_effort[9], get_effort[10], get_effort[11]]
+
 
         # com data
         com_msg.com_position = [pose_orn[0][0], pose_orn[0][1], pose_orn[0][2]]
         com_msg.com_velocity = [get_velocity[0][0], get_velocity[0][1], get_velocity[0][2]]
-        del get_last_vel[:]
+        #com_msg.com_effort = [get_effort[0], get_effort[1], get_effort[2], get_effort[3], get_effort[4], get_effort[5], get_effort[6], get_effort[7], get_effort[8], get_effort[8], get_effort[9], get_effort[10], get_effort[11]]
+
+        get_last_vel.clear()
         get_last_vel = com_msg.com_velocity
 
         # stand up control

@@ -130,10 +130,10 @@ private:
 
   // High speed running
   //float _body_height = 0.34;
-  float _body_height = 0.35;
+  float _body_height = 0.45;
 
-  float _body_height_running = 0.35;
-  float _body_height_jumping = 0.36;
+  float _body_height_running = 0.45;
+  float _body_height_jumping = 0.46;
 
   void recompute_timing(int iterations_per_mpc);
   void updateMPCIfNeeded(int* mpcTable, StateEstimatorContainer<float> &_stateEstimator, bool omniMode);

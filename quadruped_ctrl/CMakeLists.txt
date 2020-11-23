@@ -123,9 +123,8 @@ include_directories(${catkin_INCLUDE_DIRS}
   include/${PROJECT_NAME}
   src
 )
-include_directories("/usr/local/include/eigen3")
+include_directories("/home/rf/cheetag_ws/src/mini-cheetah-pybullet/quadruped_ctrl/third_party/eigen3")
 ## Declare a C++ library
-
 
 add_subdirectory(src/qpOASES)
 add_subdirectory(src/JCQP)

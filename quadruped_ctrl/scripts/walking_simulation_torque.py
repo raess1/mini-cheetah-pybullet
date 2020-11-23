@@ -26,7 +26,7 @@ def init_simulation():
     FixedBase = False  # if fixed no plane is imported
     if (FixedBase == False):
         p.loadURDF("plane.urdf")
-    boxId = p.loadURDF("/home/wgx/Workspace_Ros/src/cloudrobot/src/quadruped_robot.urdf", cubeStartPos,
+    boxId = p.loadURDF("/home/rf/cheetag_ws/src/mini-cheetah-pybullet/quadruped_ctrl/third_party/k3lso_v3/k3lso.urdf", cubeStartPos,
                        useFixedBase=FixedBase)
     # boxId = p.loadURDF("mini_cheetah/mini_cheetah.urdf", cubeStartPos,
     #                    useFixedBase=FixedBase)
@@ -47,7 +47,7 @@ def init_simulation():
     footFL_index = 7
     footBR_index = 11
     footBL_index = 15
-    init_new_pos = [0.02, -0.78, 1.74, -0.02, -0.78, 1.74, 0.02, -0.78, 1.74, -0.02, -0.78, 1.74]
+    init_new_pos = [-0.1, -0.78, 1.04, 0.1, -0.78, 1.04, -0.1, -0.78, 1.04, 0.1, -0.78, 1.04]
     for j in range(12):
         # p.changeVisualShape(quadruped, j, rgbaColor=[1, 1, 1, 1])
         force = 500
